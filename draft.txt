@@ -1,0 +1,56 @@
+- Variable parameters
+    - Why it works
+        - No matter how many formal parameters a function has, it will accept any number of actual parameters
+        - If the number of formal parameters is more than the number of actual parameters,
+            the rest of the formal parameters will be assigned the value 'undefined'
+        - If the number of formal parameters is less than the number of actual parameters,
+            the rest of the actual parameters will be assigned to the "rest parameters" array
+            (if one or more "rest parameters" exist)
+        - In both cases, all actual parameters are put in an array-like object called "arguments"
+    - How it is done
+        - Rest parameters syntax
+        - Arguments object
+    - Built in examples
+        - Math.max()
+- Functions as first class objects
+    - Why it works
+        - Functions are considered objects with a special characteristic of being callable
+        - Can be assignment to variables
+        - Can be passed as an argument
+        - Can be returned
+    - How it is done
+        - Defining the function and using its name
+        - Anonymously defined function
+        - Arrow function
+    - Built-in example
+        - Some built in functions use this principle: eg. map
+- Unbounded polymorphism due to coercion and implicit dynamic typing
+    - Why it works
+        - When accessing an object's property, the object is searched for this property at runtime
+        - When accessing a property in a primitive data type, it is coerced into a wrapper object
+    - How it is done
+        - If there is an object abstraction (variable, function parameter, etc)
+        - And a piece of code accesses a certain property in this abstraction
+        - Then any object with this property can be a specialization of abstraction
+        - In fact, any object without this property can be a specialization of this abstraction
+            - However the programmer must be aware that accessing the property will return "undefined"
+    - Built-in example
+        - The + operator, when used on objects that can not be arithmetically added, calls toString() on both objects
+            and calls the + operator on whatever toString() returned
+        - Any object can have any implementation for toString()
+        # In fact, JS engines will be totally fine with both objects implementing toString() to return a number
+            and will add these two numbers
+- Dynamic inheritance using the prototype property
+    - Why it works
+        - Each object has a prototype property whose value can be another object or null
+        - When a property is accessed, the JS engine searches not only the object for this property but also
+            its prototype, and its prototype's prototype, and so on until it reaches an object whose prototype is null
+        - Hence an inheritance hierarchy is formed using composition
+        - This prototype object can be replaced at runtime hence changing some of the methods that are available
+            to the object
+    - How it is done
+        - Object.setPrototypeOf(obj, proto) changes the prototype of obj to proto
+    - Built-in examples
+        - Changing the prototype of an object currently has bad performance in most JavaScript engines
+        - Hence it is not recommended to use Object.setPrototypeOf(obj, proto) and rather create a new object with
+        the desired prototype using Object.create(proto)

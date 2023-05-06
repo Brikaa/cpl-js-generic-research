@@ -23,7 +23,7 @@ Choose a language from the following languages:
 * Deliver and discuss the hand-written paper with the TA during your lab of the week starting at 13 May.
 * You must attend your lab slot, not any other lab slot.
 * You are not allowed to deliver an assignment on behalf of any other student.
-* You are allowed to choose a programming languge which differs from the language you chose in assignment 1.
+* You are allowed to choose a programming language which differs from the language you chose in assignment 1.
 
 The encoding method:
 * Write your report in exactly one text file such as myfile.txt.
