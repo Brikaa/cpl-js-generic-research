@@ -7,10 +7,10 @@ Omar Adel Abdel Hamid Ahmed Brikaa - 20206043 - S5 - Wed 11:15 - JS (ES6)
 No matter how many formal parameters a function has, it will accept any number of actual parameters.
 If the number of formal parameters is more than the number of actual parameters,
 the rest of the formal parameters will be assigned the value 'undefined'.
-If it is less than the number of actual parameters,
-the rest of the actual parameters will be assigned to the "rest parameter" array (if a "rest parameter" exists)
-In both cases, all actual parameters are put in an array-like object called "arguments".
-This helps us create functions that accept arbitrary number of parameters.
+If it is less, the rest of the actual parameters will be assigned to the "rest parameter" array
+(if a "rest parameter" exists).
+Either way, all actual parameters are put in an array-like object called "arguments".
+This helps us create functions that accept an arbitrary number of parameters.
 
 ## How it is done
 
@@ -45,14 +45,14 @@ Math.max(1, 3, 4, 2, 0); // 4
 ## Why it works
 
 Functions are considered objects with a special characteristic of being callable.
-They can be assignment to variables, passed as arguments to other functions and returned from other functions.
+They can be assigned to variables, passed as arguments to other functions and returned from other functions.
 This helps us form function abstractions that can be specialized by different concrete functions
 at different points in time.
 
 ## How it is done
 
-Following are three different ways to pass a function to the map function.
-These examples return an array with all elements incremented by two.
+Following are three different ways to pass a function we defined to the built-in map function.
+These examples return an array with all elements incremented by two:
 
 ### Defining a function and using its name
 
@@ -79,15 +79,13 @@ function addTwo(x) {
 
 ## Built-in examples
 
-Many built-in functions accept other functions as parameters such as the map function (discussed above), forEach, filter
-and more.
+Many built-in functions accept other functions as parameters such as the map function, forEach and filter.
 
 # Unbounded polymorphism due to coercion and implicit dynamic typing
 
 ## Why it works
 
 When accessing an object's property, the object is searched for this property at runtime.
-When accessing a property in a primitive data type, it is coerced into a wrapper object.
 This helps us create object abstractions that can be specialized by different concrete objects having certain properties
 at different points in time.
 
@@ -97,18 +95,30 @@ If there is an object abstraction (variable, function parameter, etc)
 and a piece of code accesses a certain property in this abstraction,
 then any object with this property can be a specialization of this abstraction.
 In fact, any object without this property can be a specialization of this abstraction;
-however, the programmer must be aware that accessing the property will return "undefined"
+however, the programmer must be aware that accessing the property will return "undefined".
 
 ## Built-in example
 
-The + operator, when used on objects that can not be arithmetically added,
-calls toString() on both objects and calls the + operator on whatever toString() returns.
-Any object can have any implementation for toString().
+The `+` operator, when used on objects,
+calls `valueOf()` on both objects and calls the `+` operator on whatever `valueOf()` returns.
+Any object can have any implementation for `valueOf()`.
+Following is an example that adds the perimeters of two shapes:
 
 ```js
-let obj1 = { toString: () => 'Hello ' };
-let obj2 = { toString: () => ' World!' };
-obj1 + obj2; // Hello World!
+let square = {
+  s: 3,
+  valueOf: function () {
+    return this.s * 4;
+  }
+};
+let rectangle = {
+  l: 2,
+  w: 3,
+  valueOf: function () {
+    return (this.l + this.w) * 2;
+  }
+};
+square + rectangle; // 22
 ```
 
 # Dynamic inheritance using the prototype property
@@ -129,8 +139,7 @@ to the object (dynamic inheritance).
 ## Lack of built-in examples
 
 Changing the prototype of an object currently has bad performance in most JavaScript engines.
-Hence it is not recommended to use `Object.setPrototypeOf(obj, proto)` and rather create a new object with
-the desired prototype using `Object.create(proto)`
+Hence it is recommended to instead create a new object with the desired prototype using `Object.create(proto)`.
 
 # Comprehensive program
 
