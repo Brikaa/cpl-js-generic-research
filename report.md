@@ -1,4 +1,4 @@
-Omar Adel Abdel Hamid Ahmed Brikaa - 20206043 - S5 - Wed 11:15 - JS (ES6)
+Omar Adel Abdel Hamid Ahmed Brikaa - 20206043 - S5 - Wed 11:15 - JS (ES6) - brikaaomar@gmail.com
 
 # Variable parameters
 
@@ -156,7 +156,7 @@ class Model {
 
 class Entity {
   toString() {
-    console.log('Entity');
+    return 'Entity';
   }
 
   delete() {
@@ -167,7 +167,7 @@ class Entity {
 
 class DeletedEntity {
   constructor(date) {
-    this.deletion_date = date;
+    this.deletionDate = date;
   }
 
   recycle() {
@@ -205,17 +205,17 @@ function logEntities(logging_fn, ...entities) {
 }
 
 (() => {
-  userModel = new Model(new User('Omar'), new User('Adel'), new User('Abdel Hamid'));
+  userModel = new Model(new User('Omar'), new User('Adel'), new User('Ahmed'));
   roomModel = new Model(new Room(32), new Room(35), new Room(23));
   logEntities(
     console.log,
     ...userModel.select((u) => u.name.startsWith('A')),
     ...roomModel.select((r) => r.number >= 30)
   );
-  const omar = userModel.select((u) => u.name === 'Omar')[0];
-  omar.delete();
-  console.log(omar.deletion_date);
-  console.log('delete' in omar); // false because omar's superclass is now DeletedEntity which does not have 'delete'
-  omar.recycle();
+  const user = userModel.select((u) => u.name === 'Omar')[0];
+  user.delete();
+  console.log(user.deletionDate);
+  console.log('delete' in user); // false because user's parent is now DeletedEntity which does not have 'delete'
+  user.recycle();
 })();
 ```
