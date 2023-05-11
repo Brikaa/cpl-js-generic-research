@@ -34,19 +34,15 @@ function logAll() {
 
 ## Built-in examples
 
-`Math.max()` accepts an arbitrary number of parameters and return the maximum of them.
-
-```js
-Math.max(1, 3, 4, 2, 0); // 4
-```
+`Math.max()` accepts an arbitrary number of parameters and return the their maximum.
 
 # Functions as first-class objects
 
 ## Why it works
 
-Functions are considered objects with a special characteristic of being callable.
+Functions are considered objects with the special characteristic of being callable.
 They can be assigned to variables, passed as arguments to other functions and returned from other functions.
-This helps us form function abstractions that can be specialized by different concrete functions
+This helps in creating function abstractions that can be specialized by different concrete functions
 at different points in time.
 
 ## How it is done
@@ -63,7 +59,7 @@ function addTwo(x) {
 [1, 2, 3].map(addTwo);
 ```
 
-### Anonymously defined function
+### Anonymous function
 
 ```js
 [1, 2, 3].map(function (x) {
@@ -79,17 +75,17 @@ function addTwo(x) {
 
 ## Built-in examples
 
-Many built-in functions accept other functions as parameters such as the map function, forEach and filter.
+Many built-in functions accept other functions as parameters such as the map, forEach and filter.
 
-# Unbounded polymorphism due to coercion and implicit dynamic typing
+# Unbounded polymorphism
 
 ## Why it works
 
 When accessing an object's property, the object is searched for this property at runtime.
-This helps us create object abstractions that can be specialized by different concrete objects having certain properties
-at different points in time.
+This helps in creating object abstractions that can be specialized
+by different concrete objects having certain properties at different points in time.
 
-## How it works
+## How it is done
 
 If there is an object abstraction (variable, function parameter, etc)
 and a piece of code accesses a certain property in this abstraction,
@@ -100,9 +96,9 @@ however, the programmer must be aware that accessing the property will return "u
 ## Built-in example
 
 The `+` operator, when used on objects,
-calls `valueOf()` on both objects and calls the `+` operator on whatever `valueOf()` returns.
+calls the `valueOf()` method (property) of both objects and calls the `+` operator on whatever `valueOf()` returned.
 Any object can have any implementation for `valueOf()`.
-Following is an example that adds the perimeters of two shapes:
+Following is an example that adds the perimeters of two shapes using the `+` operator:
 
 ```js
 let square = {
@@ -118,30 +114,30 @@ let rectangle = {
     return (this.l + this.w) * 2;
   }
 };
-square + rectangle; // 22
+console.log(square + rectangle); // 22
 ```
 
 # Dynamic inheritance using the prototype property
 
 ## Why it works
 
-Each object has a prototype property whose value can be another object or null.
+Each object has a prototype property whose value can either be another object or null.
 When a property is accessed, the JS engine searches not only the object for this property but also
 its prototype, and its prototype's prototype, and so on until it reaches an object whose prototype is null.
 Hence an inheritance hierarchy is formed using aggregation.
-This prototype object can be replaced at runtime hence changing some of the methods that are available
+An object's prototype can be replaced at runtime hence changing some of the properties that are available
 to the object (dynamic inheritance).
 
-## How it works
+## How it is done
 
 `Object.setPrototypeOf(obj, proto)` changes the prototype of `obj` to `proto`.
 
-## Lack of built-in examples
+## Scarceness of built-in examples
 
-Changing the prototype of an object currently has bad performance in most JavaScript engines.
+Changing the prototype of an object currently has bad performance in most engines.
 Hence it is recommended to instead create a new object with the desired prototype using `Object.create(proto)`.
 
-# Comprehensive program
+# The following is a program that demonstrates all of the discussed concepts
 
 ```js
 class Model {
@@ -158,16 +154,6 @@ class Model {
   }
 }
 
-class DeletedEntity {
-  constructor(date) {
-    this.deletion_date = date;
-  }
-
-  recycle() {
-    Object.setPrototypeOf(this, new Entity());
-  }
-}
-
 class Entity {
   toString() {
     console.log('Entity');
@@ -176,6 +162,16 @@ class Entity {
   delete() {
     // Dynamic inheritance. When used in the child, the child's parent will be DeletedEntity instead of Entity
     Object.setPrototypeOf(this, new DeletedEntity(new Date()));
+  }
+}
+
+class DeletedEntity {
+  constructor(date) {
+    this.deletion_date = date;
+  }
+
+  recycle() {
+    Object.setPrototypeOf(this, new Entity());
   }
 }
 

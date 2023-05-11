@@ -1,4 +1,5 @@
 class Model {
+  // Unlike C++ and Java, in JS, classes are just syntactic sugar that facilitate the creation of objects
   #entities;
   constructor(...initial_entities) {
     // Variable parameters using rest syntax
@@ -11,16 +12,6 @@ class Model {
   }
 }
 
-class DeletedEntity {
-  constructor(date) {
-    this.deletion_date = date;
-  }
-
-  recycle() {
-    Object.setPrototypeOf(this, new Entity());
-  }
-}
-
 class Entity {
   toString() {
     console.log('Entity');
@@ -29,6 +20,16 @@ class Entity {
   delete() {
     // Dynamic inheritance. When used in the child, the child's parent will be DeletedEntity instead of Entity
     Object.setPrototypeOf(this, new DeletedEntity(new Date()));
+  }
+}
+
+class DeletedEntity {
+  constructor(date) {
+    this.deletion_date = date;
+  }
+
+  recycle() {
+    Object.setPrototypeOf(this, new Entity());
   }
 }
 
