@@ -4,8 +4,8 @@
         - If the number of formal parameters is more than the number of actual parameters,
             the rest of the formal parameters will be assigned the value 'undefined'
         - If the number of formal parameters is less than the number of actual parameters,
-            the rest of the actual parameters will be assigned to the "rest parameters" array
-            (if one or more "rest parameters" exist)
+            the rest of the actual parameters will be assigned to the "rest parameter" array
+            (if a "rest parameter" exist)
         - In both cases, all actual parameters are put in an array-like object called "arguments"
     - How it is done
         - Rest parameters syntax

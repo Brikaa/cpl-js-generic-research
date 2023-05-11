@@ -1,0 +1,3 @@
+#!/bin/bash
+
+pandoc --strip-comments -t plain report.md | tail -n +2 | wc -w

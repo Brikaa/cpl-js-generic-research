@@ -15,6 +15,10 @@ class DeletedEntity {
   constructor(date) {
     this.deletion_date = date;
   }
+
+  recycle() {
+    Object.setPrototypeOf(this, new Entity());
+  }
 }
 
 class Entity {
@@ -68,4 +72,6 @@ function logEntities(logging_fn, ...entities) {
   const omar = userModel.select((u) => u.name === 'Omar')[0];
   omar.delete();
   console.log(omar.deletion_date);
+  console.log('delete' in omar); // false because omar's superclass is now DeletedEntity which does not have 'delete'
+  omar.recycle();
 })();
